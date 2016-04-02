@@ -71,6 +71,8 @@ public class MazeFrame extends JFrame {
 		framePanel.add(control);
 		control.setMazeSizeListener(mazeShow);
 		
+		control.setRunListener(mazeShow);
+		
 		this.setVisible(true);
 	}
 	

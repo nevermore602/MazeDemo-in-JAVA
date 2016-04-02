@@ -3,9 +3,11 @@ package com.wei.maze;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.geom.Point2D;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import com.wei.maze.MazePaintPanel.MazeSize;
 
@@ -17,6 +19,8 @@ public class MazeShowPanel extends JPanel {
 	private final int mpsHeight=600;
 	private FlowLayout showflow;
 	private MazePaintPanel paintPanel;
+	private RunInMaze run;
+	
 	public MazeShowPanel() {
 		// TODO 自动生成的构造函数存根
 		super();
@@ -31,11 +35,20 @@ public class MazeShowPanel extends JPanel {
 		
 		paintPanel=new MazePaintPanel();
 		this.add(paintPanel);
+		
+		run=new RunInMaze(paintPanel);
 	}
 	
 	public void setMazeSize(MazeSize maze_size)
 	{
 		paintPanel.setMazeSize(maze_size);
+		run.runAgain();
+	}
+	
+	
+	public void computerRun()
+	{
+		run.runByComputer();	
 	}
 
 }

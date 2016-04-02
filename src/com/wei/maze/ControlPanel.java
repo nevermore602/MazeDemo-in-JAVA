@@ -29,6 +29,9 @@ public class ControlPanel extends JPanel {
 	private GridBagLayout gridBag;
 	private JButton maze_cls;
 	private GridBagConstraints constraintsZero;
+	private JButton runByCom;
+	private GridBagConstraints constraintsRun;
+	
 	public ControlPanel() {
 		// TODO 自动生成的构造函数存根
 		super();
@@ -96,6 +99,20 @@ public class ControlPanel extends JPanel {
 		constraintsZero.gridwidth=GridBagConstraints.REMAINDER;
 		constraintsZero.fill= GridBagConstraints.NONE;
 		this.add(maze_cls, constraintsZero);
+		
+		runByCom=new JButton("自动寻路");
+		runByCom.setPreferredSize(new Dimension(220, 50));
+		runByCom.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 25));
+		runByCom.setFocusable(false);
+		constraintsRun=new GridBagConstraints();
+		constraintsRun.weightx=100;
+		constraintsRun.weighty=100;
+		constraintsRun.gridx=0;
+		constraintsRun.gridy=4;
+		constraintsRun.gridheight=1;
+		constraintsRun.gridwidth=GridBagConstraints.REMAINDER;
+		constraintsRun.fill= GridBagConstraints.NONE;
+		this.add(runByCom, constraintsRun);
 	}
 	
 	public void setMazeSizeListener(final MazeShowPanel p)
@@ -133,6 +150,18 @@ public class ControlPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO 自动生成的方法存根
 				p.setMazeSize(MazeSize.none);
+			}
+		});
+	}
+	
+	public void setRunListener(final MazeShowPanel p)
+	{
+		runByCom.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				p.computerRun();
 			}
 		});
 	}
