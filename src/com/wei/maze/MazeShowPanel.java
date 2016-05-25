@@ -9,7 +9,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import com.wei.maze.MazePaintPanel.MazeSize;
 
 public class MazeShowPanel extends JPanel {
 	
@@ -39,8 +38,10 @@ public class MazeShowPanel extends JPanel {
 		run=new RunInMaze(paintPanel);
 	}
 	
-	public void setMazeSize(MazeSize maze_size)
+	public void setMazeSize(int maze_size)
 	{
+		if(!run.runThreadIsNull())
+			run.interruptRun();
 		paintPanel.setMazeSize(maze_size);
 		run.runAgain();
 	}
@@ -48,7 +49,9 @@ public class MazeShowPanel extends JPanel {
 	
 	public void computerRun()
 	{
-		run.runByComputer();	
+		
+        run.runByComputer();	
+
 	}
 
 }

@@ -19,71 +19,42 @@ import javax.swing.JPanel;
 
 public class MazePaintPanel extends JPanel {
 
-	public final int paintWidth = 500;
-	public final int paintHeight = 500;
+	public static final int paintWidth = 500;
+	public static final int paintHeight = 500;
 	public static final int MAX_Directions = 4;
-
-	public enum MazeSize {
-		ten(10), twenty(20), fifty(50),none(0);
-
-		private int size;
-
-		private MazeSize(int s) {
-			size = s;
-		}
-	};
 	
-	public enum MazeDirection{
-		up(0),right(1),down(2),left(3);
-		
-		private int num;
-		
-		private MazeDirection(int n) {
-			num=n;
-		}
-		public int getNum()
-		{
-			return num;
-		}
-		public static MazeDirection changeToDirection(int i)
-		{
-			switch(i)
-			{
-			  case 0:
-				  return up;
+	public static final int TEN=10;
+	public static final int TWENTY=20;
+	public static final int FIFTY=50;
+	public static final int NONE=0;
+	
+	public static final int UP=0;
+	public static final int RIGHT=1;
+	public static final int DOWN=2;
+	public static final int LEFT=3;
+
+	public static class MazeDirection{
 				
-			  case 1:
-				  return right;
-				
-			  case 2:
-				  return down;
-				 
-			  case 3:
-			  default:
-				  return left;	 
-			}
-		}
-		
-		public static int moveX(MazeDirection m)
+		public static int moveX(int m)
 		{
 			switch(m)
 			{
-			case left:
+			case LEFT:
 				return -1;
-			case right:
+			case RIGHT:
 				return 1;
 			default:
 				return 0;
 			}
 		}
 		
-		public static int moveY(MazeDirection m)
+		public static int moveY(int m)
 		{
 			switch(m)
 			{
-			case up:
+			case UP:
 				return -1;
-			case down:
+			case DOWN:
 				return 1;
 			default:
 				return 0;
@@ -106,10 +77,10 @@ public class MazePaintPanel extends JPanel {
 	private UnionFindTree set; // 并查集
 	private int startX;
 	private int startY;
-	private MazeDirection startWALL;
+	private int startWALL;
 	private int endX;
 	private int endY;
-	private MazeDirection endWALL;
+	private int endWALL;
 
 	public MazePaintPanel() {
 		// TODO 自动生成的构造函数存根
@@ -127,7 +98,7 @@ public class MazePaintPanel extends JPanel {
 		
 		pathPointList=new LinkedList<Point2D>();
 		
-		setMazeSize(MazeSize.none);
+		setMazeSize(MazePaintPanel.NONE);
 	}
 	
 	public int getStartX()
@@ -140,7 +111,7 @@ public class MazePaintPanel extends JPanel {
 		return startY;
 	}
 	
-	public MazeDirection getStartD()
+	public int getStartD()
 	{
 		return startWALL;
 	}
@@ -155,7 +126,7 @@ public class MazePaintPanel extends JPanel {
 		return endY;
 	}
 	
-	public MazeDirection getEndD()
+	public int getEndD()
 	{
 		return endWALL;
 	}
@@ -192,9 +163,9 @@ public class MazePaintPanel extends JPanel {
 	}
 	
 	//判断是否能走通
-	public boolean canRun(int x,int y,MazeDirection d)
+	public boolean canRun(int x,int y,int d)
 	{
-		return mazeArray[y][x].wall[d.num] 
+		return mazeArray[y][x].wall[d] 
 				&& mazeArray[y+MazeDirection.moveY(d)][x+MazeDirection.moveX(d)].getAvailable();
 	}
 	
@@ -216,13 +187,13 @@ public class MazePaintPanel extends JPanel {
 	}
 	
 	//设置迷宫尺寸
-	public void setMazeSize(MazeSize m) {
+	public void setMazeSize(int m) {
 
-		cellSize=m.size;
+		cellSize=m;
 		clearList();   //清空禁止点和路径列表
-		if(m.size!=0)
+		if(m!=0)
 		{
-			max_birds = paintWidth / m.size;
+			max_birds = paintWidth / m;
 
 			mazeArray = new MazeGird[max_birds][];
 			for (int i = 0; i < max_birds; i++) {
@@ -388,10 +359,10 @@ public class MazePaintPanel extends JPanel {
 		maze[pointY][pointX].wall[line]=true;
 		if(SE==0)  
 		{
-			startX=pointX;startY=pointY;startWALL=MazeDirection.changeToDirection(line);
+			startX=pointX;startY=pointY;startWALL=line;
 		}else
 		{
-			endX=pointX;endY=pointY;endWALL=MazeDirection.changeToDirection(line);
+			endX=pointX;endY=pointY;endWALL=line;
 		}
 	}
 }
